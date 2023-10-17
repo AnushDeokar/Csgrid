@@ -1,0 +1,8 @@
+// tsconfig.eslint.json
+{
+  "include": ["postcss.config.js"],
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    // Add any specific compiler options needed for ESLint
+  }
+}
