@@ -11,7 +11,7 @@ function AuthLayout({ children }: AuthLayoutProps): React.ReactNode {
           Blog website built in Nextjs
         </h1>
       </div>
-      <div className="hidden lg:block bg-green h-full w-ful">{children}</div>
+      {children}
     </div>
   );
 }
