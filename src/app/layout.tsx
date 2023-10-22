@@ -4,6 +4,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers";
 import { ThemeSwitcher } from "@/components/ToggleTheme";
+import { fontMono, fontSans } from "@/libs/font";
+import cn from "@/libs/cn";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +25,13 @@ export default function RootLayout({
 }): React.ReactNode {
   return (
     <html lang="en">
-      <body className={`${inter.className}`}>
+      <body
+        className={cn(
+          `${inter.className} bg-background font-Sans antialiased`,
+          fontSans.variable,
+          fontMono.variable
+        )}
+      >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <ThemeSwitcher />
           <main>{children}</main>

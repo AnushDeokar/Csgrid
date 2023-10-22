@@ -15,7 +15,7 @@ export const ThemeSwitcher = (): React.ReactElement | null => {
   }
 
   return (
-    <div className="flex gap-8">
+    <div className="flex gap-8 fixed bottom-1 right-1">
       <button
         onClick={() => {
           setTheme(theme === "dark" ? "light" : "dark");
