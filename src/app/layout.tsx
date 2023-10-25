@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/providers";
 import { ThemeSwitcher } from "@/components/ToggleTheme";
 import { fontMono, fontSans } from "@/libs/font";
 import cn from "@/libs/cn";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,19 +25,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }): React.ReactNode {
   return (
-    <html lang="en">
-      <body
-        className={cn(
-          `${inter.className} bg-background font-Sans antialiased`,
-          fontSans.variable,
-          fontMono.variable
-        )}
-      >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <ThemeSwitcher />
-          <main>{children}</main>
-        </ThemeProvider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body
+          className={cn(
+            `${inter.className} bg-background font-Sans antialiased`,
+            fontSans.variable,
+            fontMono.variable
+          )}
+        >
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <ThemeSwitcher />
+            <main>{children}</main>
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

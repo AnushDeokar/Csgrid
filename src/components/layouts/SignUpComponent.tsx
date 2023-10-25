@@ -7,7 +7,7 @@ import { CardContent, CardFooter } from "@/components/ui/Card";
 import { Label } from "../ui/Label";
 import { Input } from "../ui/Input";
 
-export function SignInComponent(): React.ReactNode {
+export function SignUpComponent(): React.ReactNode {
   return (
     <CardContent className="grid gap-4">
       <div className="grid grid-cols-2 gap-6">
@@ -28,6 +28,16 @@ export function SignInComponent(): React.ReactNode {
           <span className="bg-background px-2 text-muted-foreground">
             Or continue with
           </span>
+        </div>
+      </div>
+      <div className="grid grid-cols-2 gap-2 mt-2">
+        <div className="grid gap-2">
+          <Label htmlFor="email">First Name</Label>
+          <Input id="email" type="email" placeholder="Eg. John" />
+        </div>
+        <div className="grid gap-2">
+          <Label htmlFor="password">Last Name</Label>
+          <Input id="password" type="password" placeholder="Eg. Smith" />
         </div>
       </div>
       <div className="grid gap-2">
