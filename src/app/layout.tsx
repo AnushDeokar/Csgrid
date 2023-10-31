@@ -26,7 +26,7 @@ export default function RootLayout({
 }): React.ReactNode {
   return (
     <ClerkProvider>
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning={true}>
         <body
           className={cn(
             `${inter.className} bg-background font-Sans antialiased`,
