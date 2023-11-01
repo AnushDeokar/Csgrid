@@ -3,9 +3,10 @@ import NavBarDropDownList from "../ui/NavBarDropdownList";
 import SearchBar from "../ui/SearchBar";
 import NavbarSigninBtn from "../ui/NavbarSigninBtn";
 import { currentUser } from "@clerk/nextjs";
+import type { User } from "@clerk/nextjs/server";
 
 async function MainNavbar(): Promise<any> {
-  const user = await currentUser();
+  const user: User | null = await currentUser();
 
   return (
     <div className="hidden md:flex items-center md:px-16 lg:px-24 sticky h-16 border-b justify-between w-screen top-0">
