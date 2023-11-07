@@ -9,7 +9,10 @@ async function MainNavbar(): Promise<any> {
   const user: User | null = await currentUser();
 
   return (
-    <div className="hidden md:flex items-center md:px-16 lg:px-24 sticky h-16 border-b justify-between w-screen top-0">
+    <div
+      className="hidden md:flex items-center md:px-16 lg:px-24 sticky 
+      h-16 border-b justify-between w-screen top-0 bg-background"
+    >
       <div className="font-sans flex items-center justify-between gap-10">
         <span className="font-bold">Skateshop </span>
         <NavBarDropDownList />

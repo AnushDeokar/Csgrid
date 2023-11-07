@@ -8,7 +8,7 @@ function HomeLayout({ children }: HomeLayoutProps): React.ReactNode {
   return (
     <main>
       <MainNavbar />
-      {children}
+      <div className="w-screen overflow-hidden h-[10000px]">{children}</div>
     </main>
   );
 }
