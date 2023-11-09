@@ -11,7 +11,7 @@ async function MainNavbar(): Promise<any> {
   return (
     <div
       className="hidden md:flex items-center md:px-16 lg:px-24 sticky 
-      h-16 border-b justify-between w-screen top-0 bg-background"
+      h-16 border-b justify-between top-0 bg-background"
     >
       <div className="font-sans flex items-center justify-between gap-10">
         <span className="font-bold">Skateshop </span>

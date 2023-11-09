@@ -29,7 +29,7 @@ export default function RootLayout({
       <html lang="en" suppressHydrationWarning={true}>
         <body
           className={cn(
-            `${inter.className} bg-background font-Sans antialiased w-screen  overflow-x-hidden`,
+            `${inter.className} bg-background font-Sans antialiased`,
             fontSans.variable,
             fontMono.variable
           )}
