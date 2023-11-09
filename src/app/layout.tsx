@@ -3,10 +3,10 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers";
-import { ThemeSwitcher } from "@/components/ToggleTheme";
 import { fontMono, fontSans } from "@/libs/font";
 import cn from "@/libs/cn";
 import { ClerkProvider } from "@clerk/nextjs";
+import ModifiedToaster from "@/components/ui/Toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -35,7 +35,7 @@ export default function RootLayout({
           )}
         >
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <ThemeSwitcher />
+            <ModifiedToaster />
             {children}
           </ThemeProvider>
         </body>

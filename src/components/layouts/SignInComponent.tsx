@@ -9,6 +9,7 @@ import { Input } from "../ui/Input";
 import Link from "next/link";
 import { useSignIn } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 interface formDataProps {
   email: string;
@@ -36,7 +37,7 @@ export function SignInComponent(): React.ReactNode {
       })
       .then((result) => {
         if (result.status === "complete") {
-          console.log(result);
+          toast.success("Successfully signed in!");
           // eslint-disable-next-line
           setActive({ session: result.createdSessionId });
           router.push("/");
@@ -45,6 +46,7 @@ export function SignInComponent(): React.ReactNode {
         }
       })
       .catch((err) => {
+        toast.error("Invalid Credentials");
         console.error("error", err.errors[0].longMessage);
       });
   };

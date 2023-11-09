@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import { ThemeSwitcher } from "../ToggleTheme";
 
 function MainFooter(): React.ReactNode {
   return (
@@ -47,13 +48,18 @@ function MainFooter(): React.ReactNode {
           <p>Shadcn</p>
         </div>
       </div>
-      <div className="w-full text-muted-foreground py-10 px-10 text-base">
-        Developed by &nbsp;
-        <Link href="https://github.com">
-          <span className="font-semibold underline-offset-2 underline cursor-pointer">
-            Anush Deokar
-          </span>
-        </Link>
+      <div className="w-full text-muted-foreground py-10 px-10 text-base flex justify-between items-center">
+        <div>
+          Developed by &nbsp;
+          <Link href="https://github.com">
+            <span className="font-semibold underline-offset-2 underline cursor-pointer">
+              Anush Deokar
+            </span>
+          </Link>
+        </div>
+        <div>
+          <ThemeSwitcher />
+        </div>
       </div>
     </div>
   );

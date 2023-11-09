@@ -9,6 +9,7 @@ import { Input } from "../ui/Input";
 import Link from "next/link";
 import { useSignUp } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 interface FormValues {
   firstname: string;
@@ -33,8 +34,11 @@ export function SignUpComponent(): React.ReactNode {
     password: "",
   });
 
+  const [signupLoad, setSignupLoad] = useState<boolean>(false);
+
   const handleSubmit: any = async () => {
     try {
+      setSignupLoad(true);
       await signUp.create({
         emailAddress: formData.email,
         password: formData.password,
@@ -44,14 +48,18 @@ export function SignUpComponent(): React.ReactNode {
 
       // send the email.
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
-
-      // change the UI to our pending section.
-      // setPendingVerification(true);
+      toast.success("Please check your email!");
 
       // eslint-disable-next-line no-use-before-define
       router.push("/signup/verify");
     } catch (err: any) {
-      console.error(JSON.stringify(err, null, 2));
+      setSignupLoad(false);
+      console.log(err);
+      toast.error(
+        err.errors[0]?.message !== undefined
+          ? err.errors[0]?.message
+          : "Something went wrong"
+      );
     }
   };
   return (
@@ -127,7 +135,14 @@ export function SignUpComponent(): React.ReactNode {
         />
       </div>
       <Button className="w-full" type="submit" onClick={handleSubmit}>
-        Create account
+        {signupLoad ? (
+          <Icons.spinner
+            className="mr-2 h-4 w-4 animate-spin"
+            aria-hidden="true"
+          />
+        ) : (
+          "Create account"
+        )}
       </Button>
       <CardFooter>
         <div className="text-sm text-muted-foreground">
