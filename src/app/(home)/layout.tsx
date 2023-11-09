@@ -1,3 +1,4 @@
+import MainFooter from "@/components/layouts/MainFooter";
 import MainNavbar from "@/components/layouts/MainNavbar";
 import React from "react";
 
@@ -9,6 +10,7 @@ function HomeLayout({ children }: HomeLayoutProps): React.ReactNode {
     <main>
       <MainNavbar />
       {children}
+      <MainFooter />
     </main>
   );
 }

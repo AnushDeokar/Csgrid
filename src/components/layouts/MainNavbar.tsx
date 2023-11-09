@@ -14,7 +14,7 @@ async function MainNavbar(): Promise<any> {
       h-16 border-b justify-between top-0 bg-background"
     >
       <div className="font-sans flex items-center justify-between gap-10">
-        <span className="font-bold">Skateshop </span>
+        <span className="font-bold">GeekGrid</span>
         <NavBarDropDownList />
       </div>
       <div className="flex items-center gap-4">
