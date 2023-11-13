@@ -14,8 +14,8 @@ export default function Home(): React.ReactNode {
           A blogging website built with everything new in Next.js 13
         </h1>
         <p className="text-muted-foreground text-md sm:text-lg md:text-xl my-4 mt-6 lg:px-40 xl:px-80">
-          Buy and sell skateboarding gears from independent brands and stores
-          around the world with ease
+          Buy and sell CS gears from independent brands and stores around the
+          world with ease
         </p>
         <button className="bg-primary text-primary-foreground shadow hover:bg-primary/90 text-xs py-2 px-4 font-semibold rounded-md">
           Read Blog
@@ -56,7 +56,7 @@ export default function Home(): React.ReactNode {
             Featured Blogs
           </h2>
           <div className="max-w-[46rem] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
-            Find the best skateboarding gears from stores around the world
+            Find the best CS gears from stores around the world
           </div>
         </div>
 

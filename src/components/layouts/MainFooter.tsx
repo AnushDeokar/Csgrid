@@ -4,7 +4,7 @@ import { ThemeSwitcher } from "../ToggleTheme";
 
 function MainFooter(): React.ReactNode {
   return (
-    <div className="border-t mt-[100px] pt-10">
+    <footer className="border-t mt-[100px] pt-10">
       <div className="grid lg:grid-cols-5 md:grid-cols-4 gap-y-8  gap-x-2 px-[2%] lg:px-[5%] grid-cols-1 sm:grid-cols-2">
         <h1 className="font-semibold text-lg">GeekGrid</h1>
         <div className="flex flex-col text-muted-foreground gap-2 text-sm">
@@ -61,7 +61,7 @@ function MainFooter(): React.ReactNode {
           <ThemeSwitcher />
         </div>
       </div>
-    </div>
+    </footer>
   );
 }
 

@@ -51,7 +51,7 @@ function NavBarDropDownList(): React.ReactElement {
             </NavigationMenuContent>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuTrigger>Skateboard</NavigationMenuTrigger>
+            <NavigationMenuTrigger>Nextjs</NavigationMenuTrigger>
             <NavigationMenuContent className="w-auto">
               <ul className="grid grid-cols-2 gap-4  w-[600px]">
                 <ListItem href="https://stitches.dev/" title="Stitches">
@@ -76,7 +76,7 @@ function NavBarDropDownList(): React.ReactElement {
             </NavigationMenuContent>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuTrigger>Skateboard</NavigationMenuTrigger>
+            <NavigationMenuTrigger>Computer Science</NavigationMenuTrigger>
             <NavigationMenuContent className="w-auto">
               <ul className="grid grid-cols-2 gap-4  w-[600px]">
                 <ListItem href="https://stitches.dev/" title="Stitches">
