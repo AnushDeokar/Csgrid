@@ -1,4 +1,6 @@
 import React from "react";
+import { categories } from "@/config/categories";
+import BlogCard from "@/components/ui/BlogCard";
 
 export default function Home(): React.ReactNode {
   return (
@@ -14,8 +16,7 @@ export default function Home(): React.ReactNode {
           A blogging website built with everything new in Next.js 13
         </h1>
         <p className="text-muted-foreground text-md sm:text-lg md:text-xl my-4 mt-6 lg:px-40 xl:px-80">
-          Buy and sell CS gears from independent brands and stores around the
-          world with ease
+          Read and Write CS blogs from around the world.
         </p>
         <button className="bg-primary text-primary-foreground shadow hover:bg-primary/90 text-xs py-2 px-4 font-semibold rounded-md">
           Read Blog
@@ -31,22 +32,20 @@ export default function Home(): React.ReactNode {
             Categories
           </h2>
           <div className="max-w-[46rem] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
-            Find the best skateboarding gears from stores around the world
+            Read Some of the best blogs in computer science
           </div>
         </div>
         <div className="grid lg:grid-cols-4 grid-cols-1 sm:grid-cols-2 lg:px=[8%] gap-4 my-10">
-          <div className="border w-full h-40 flex flex-col justify-center hover:bg-secondary/90 cursor-pointer rounded-md">
-            Category-1
-          </div>
-          <div className="border w-full h-40 flex flex-col justify-center hover:bg-secondary/90 cursor-pointer rounded-md">
-            Category-2
-          </div>
-          <div className="border w-full h-40 flex flex-col justify-center hover:bg-secondary/90 cursor-pointer rounded-md">
-            Category-3
-          </div>
-          <div className="border w-full h-40 flex flex-col justify-center hover:bg-secondary/90 cursor-pointer rounded-md">
-            Category-4
-          </div>
+          {categories.map((category, ind) => {
+            return (
+              <div
+                key={ind}
+                className="border w-full h-40 flex flex-col justify-center hover:bg-secondary/90 cursor-pointer rounded-md"
+              >
+                {category.name}
+              </div>
+            );
+          })}
         </div>
       </section>
 
@@ -61,38 +60,30 @@ export default function Home(): React.ReactNode {
         </div>
 
         <div className="grid lg:grid-cols-4 grid-cols-1 sm:grid-cols-2 lg:px-[2%] gap-8 my-10 w-full text-left">
-          <div className="flex flex-col cursor-pointer gap-2">
-            <img src="cs2.png" className="rounded-md w-full" />
-            <h3 className="font-semibold text-2xl">CS Fundamentals</h3>
-            <p className="text-muted-foreground w-full">
-              Discover the diverse styles of skate board and unleash you ...
-            </p>
-            <p className="text-left text-muted-foreground mt-4">Nov 9, 2023</p>
-          </div>
-          <div className="flex flex-col cursor-pointer gap-2">
-            <img src="cs2.png" className="rounded-md w-full" />
-            <h3 className="font-semibold text-2xl">CS Fundamentals</h3>
-            <p className="text-muted-foreground w-full">
-              Discover the diverse styles of skate board and unleash you ...
-            </p>
-            <p className="text-left text-muted-foreground mt-4">Nov 9, 2023</p>
-          </div>
-          <div className="flex flex-col cursor-pointer gap-2">
-            <img src="cs2.png" className="rounded-md w-full" />
-            <h3 className="font-semibold text-2xl">CS Fundamentals</h3>
-            <p className="text-muted-foreground w-full">
-              Discover the diverse styles of skate board and unleash you ...
-            </p>
-            <p className="text-left text-muted-foreground mt-4">Nov 9, 2023</p>
-          </div>
-          <div className="flex flex-col cursor-pointer gap-2">
-            <img src="cs2.png" className="rounded-md w-full" />
-            <h3 className="font-semibold text-2xl">CS Fundamentals</h3>
-            <p className="text-muted-foreground w-full">
-              Discover the diverse styles of skate board and unleash you ...
-            </p>
-            <p className="text-left text-muted-foreground mt-4">Nov 9, 2023</p>
-          </div>
+          <BlogCard
+            title="CS Fundamentals"
+            brief="Discover the diverse styles of skate board and unleash you"
+            date="Nov 9, 2023"
+            url="/blog/cs-fundamentals"
+          />
+          <BlogCard
+            title="CS Fundamentals"
+            brief="Discover the diverse styles of skate board and unleash you"
+            date="Nov 9, 2023"
+            url="/blog/cs-fundamentals"
+          />
+          <BlogCard
+            title="CS Fundamentals"
+            brief="Discover the diverse styles of skate board and unleash you"
+            date="Nov 9, 2023"
+            url="/blog/cs-fundamentals"
+          />
+          <BlogCard
+            title="CS Fundamentals"
+            brief="Discover the diverse styles of skate board and unleash you"
+            date="Nov 9, 2023"
+            url="/blog/cs-fundamentals"
+          />
         </div>
       </section>
     </main>
