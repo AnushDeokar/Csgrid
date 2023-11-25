@@ -12,7 +12,7 @@ import {
 
 function NavBarDropDownList(): React.ReactElement {
   return (
-    <div className="relative">
+    <div className="relative hidden lg:flex">
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>

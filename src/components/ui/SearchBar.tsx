@@ -39,7 +39,7 @@ function SearchBar(): React.ReactNode {
         onClick={() => {
           setOpen(!open);
         }}
-        className="hidden md:flex border px-2 h-9 items-center hover:bg-secondary/90 cursor-pointer gap-4 rounded-sm py-1"
+        className="flex border px-2 h-9 items-center hover:bg-secondary/90 cursor-pointer gap-4 rounded-sm py-1"
       >
         <div>
           <svg
@@ -57,14 +57,16 @@ function SearchBar(): React.ReactNode {
             ></path>
           </svg>
         </div>
-        <div className="flex-1 text-sm font-semibold">Search Blogs...</div>
-        <div className="bg-secondary px-2 flex h-full items-center rounded-sm border">
+        <div className="flex-1 text-sm font-semibold hidden md:flex">
+          Search Blogs...
+        </div>
+        <div className="bg-secondary px-2 flex h-full items-center rounded-sm border hidden md:flex">
           <span className="text-xs m-auto">Ctrl+k</span>
         </div>
       </div>
 
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput placeholder="Type a command or search..." />
+        <CommandInput placeholder="Search Blogs ..." />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading="Links">

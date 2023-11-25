@@ -1,6 +1,7 @@
 import React from "react";
 import { categories } from "@/config/categories";
 import BlogCard from "@/components/ui/BlogCard";
+import Link from "next/link";
 
 export default function Home(): React.ReactNode {
   return (
@@ -21,9 +22,11 @@ export default function Home(): React.ReactNode {
         <button className="bg-primary text-primary-foreground shadow hover:bg-primary/90 text-xs py-2 px-4 font-semibold rounded-md">
           Read Blog
         </button>
-        <button className="border shadow hover:hover:bg-secondary/90 text-xs py-2 px-4 font-semibold rounded-md ml-4">
-          Write Blog
-        </button>
+        <Link href="/write">
+          <button className="border shadow hover:hover:bg-secondary/90 text-xs py-2 px-4 font-semibold rounded-md ml-4">
+            Write Blog
+          </button>
+        </Link>
       </div>
 
       <section className="px-[5%] lg:px-[12%]">
