@@ -47,7 +47,7 @@ function WritePage() {
         )}
       </div>
       <div className="lg:px-[22%] xl:px-[23%] md:px-[7%] px-[1%] leading-7 flex gap-4">
-        <div className="flex gap-4">
+        <div className="flex gap-4 mb-4">
           <img
             src="plus.png"
             className="border rounded-full p-2 h-10 w-10 mr-auto cursor-pointer transition-transform duration-200 ease-in-out"

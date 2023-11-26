@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/Card";
 import { useSignUp } from "@clerk/clerk-react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 function SignUpVerification(): React.ReactNode {
   const [code, setCode] = useState<any>("");
@@ -28,7 +29,12 @@ function SignUpVerification(): React.ReactNode {
       }
       if (completeSignUp.status === "complete") {
         await setActive({ session: completeSignUp.createdSessionId });
-
+        await axios.post("/api/user", {
+          firstName: completeSignUp.firstName,
+          lastName: completeSignUp.lastName,
+          clerkUserId: completeSignUp.createdUserId,
+          email: completeSignUp.emailAddress,
+        });
         router.push(`${window.location.origin}/`);
       }
     } catch (err) {
