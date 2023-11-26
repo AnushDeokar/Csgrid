@@ -61,10 +61,17 @@
 .ql-container {
   font-size: 24px !important;
   color: var(--primary);
+  font-family: inherit !important;
 }
 
 .quill > .ql-container > .ql-editor.ql-blank::before {
   color: #b3b3b1;
+}
+
+.quill > .ql-container > .ql-editor {
+  font-size: 16px;
+  color: var(--primary);
+  padding: 0;
 }
 
 .quill > .ql-container > .ql-editor > h2 {
@@ -72,7 +79,6 @@
 }
 
 .quill > .ql-container > .ql-editor > p {
-  color: var(--primary);
   font-size: 16px;
 }
 
