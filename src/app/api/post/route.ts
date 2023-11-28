@@ -12,6 +12,7 @@ export async function POST(request: Request, response: Response) {
         categoryName: data.category,
         slug: data.slug,
         userId: data.userId,
+        image: data.image,
       },
     });
   } catch (err) {

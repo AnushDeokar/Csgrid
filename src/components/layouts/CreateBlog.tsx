@@ -8,17 +8,24 @@ import { Icons } from "@/components/Icons";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { generateReactHelpers } from "@uploadthing/react/hooks";
+import type { OurFileRouter } from "@/app/api/uploadthing/core";
 
 // eslint-disable-next-line
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+
+const { useUploadThing } = generateReactHelpers<OurFileRouter>();
+
 function CreateBlog({ userId }: { userId: string }): React.ReactNode {
   const router = useRouter();
   const [open, setOpen] = useState<boolean>(false);
   const [title, setTitle] = useState<string>("");
   const [rotation, setRotation] = useState<number>(0);
-  const [file, setFile] = useState<string | null>(null);
+  const [file, setFile] = useState<File | null>(null);
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [content, setContent] = useState("");
   const [isPending, setIsPending] = useState<boolean>(false);
+  const { startUpload } = useUploadThing("imageUploader");
 
   const handleClick = () => {
     setRotation(rotation + 45);
@@ -30,12 +37,18 @@ function CreateBlog({ userId }: { userId: string }): React.ReactNode {
     event.target.style.height = event.target.scrollHeight + "px";
   };
 
-  const handleFileChange = (event: any) => {
-    const file = event.target.files[0];
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // eslint-disable-next-line
+    const selectedFile = event.target.files && event.target.files[0];
 
-    if (file !== null) {
-      const imageUrl = URL.createObjectURL(file);
-      setFile(imageUrl);
+    if (selectedFile) {
+      setFile(selectedFile);
+      // Read the file as a data URL and set it as the image source
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageSrc(reader.result as string);
+      };
+      reader.readAsDataURL(selectedFile);
     }
   };
 
@@ -47,17 +60,21 @@ function CreateBlog({ userId }: { userId: string }): React.ReactNode {
       .replace(/[\s_-]+/g, "-")
       .replace(/^-+|-+$/g, "");
 
-  const handlePublish = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handlePublish = async (event: React.MouseEvent<HTMLButtonElement>) => {
     try {
       if (userId && file) {
         setIsPending(true);
+        const files: File[] = [];
+        files.push(file);
+        const res = await startUpload(files);
+
         const data = {
-          title: title,
+          title,
           slug: slugify(title),
-          content: content,
+          content,
           category: "Frontend Development",
-          image: "",
-          userId: userId,
+          image: res ? res[0].url : "",
+          userId,
         };
         axios
           .post("/api/post", data)
@@ -87,9 +104,8 @@ function CreateBlog({ userId }: { userId: string }): React.ReactNode {
           </Button>
           <Button
             className="w-fit"
-            onClick={(e: any) => {
-              handlePublish(e);
-            }}
+            // eslint-disable-next-line
+            onClick={handlePublish}
           >
             {isPending && (
               <Icons.spinner
@@ -109,8 +125,12 @@ function CreateBlog({ userId }: { userId: string }): React.ReactNode {
           className="md:text-5xl text-3xl font-bold bg-transparent outline-none h-auto w-full"
           style={{ resize: "none" }}
         />
-        {file !== null && (
-          <img src={file} alt="Selected" className="rounded-md w-full" />
+        {imageSrc && (
+          <img
+            src={imageSrc}
+            alt="Selected"
+            className="rounded-md w-full my-4"
+          />
         )}
       </div>
       <div className="lg:px-[22%] xl:px-[23%] md:px-[7%] px-[1%] leading-7 flex gap-4">
