@@ -2,8 +2,13 @@ import React from "react";
 import { categories } from "@/config/categories";
 import BlogCard from "@/components/ui/BlogCard";
 import Link from "next/link";
+import { getLatestBlogs } from "../actions/post";
+import type { Post } from "@prisma/client";
+import { formatDate } from "@/utils/date";
 
-export default function Home(): React.ReactNode {
+export default async function Home() {
+  const latestBlogs: Post[] = await getLatestBlogs();
+
   return (
     <main className=" text-center lg:pt-40 pt-20 md:pt-30 ">
       <div className="mb-24 px-[5%] lg:px-[12%]">
@@ -63,30 +68,18 @@ export default function Home(): React.ReactNode {
         </div>
 
         <div className="grid lg:grid-cols-4 grid-cols-1 sm:grid-cols-2 lg:px-[2%] gap-8 my-10 w-full text-left">
-          <BlogCard
-            title="CS Fundamentals"
-            brief="Discover the diverse styles of skate board and unleash you"
-            date="Nov 9, 2023"
-            url="/blog/cs-fundamentals"
-          />
-          <BlogCard
-            title="CS Fundamentals"
-            brief="Discover the diverse styles of skate board and unleash you"
-            date="Nov 9, 2023"
-            url="/blog/cs-fundamentals"
-          />
-          <BlogCard
-            title="CS Fundamentals"
-            brief="Discover the diverse styles of skate board and unleash you"
-            date="Nov 9, 2023"
-            url="/blog/cs-fundamentals"
-          />
-          <BlogCard
-            title="CS Fundamentals"
-            brief="Discover the diverse styles of skate board and unleash you"
-            date="Nov 9, 2023"
-            url="/blog/cs-fundamentals"
-          />
+          {latestBlogs.map((blog, ind) => {
+            return (
+              <BlogCard
+                key={ind}
+                title={blog.title}
+                brief="Discover the diverse styles of skate board and unleash you"
+                date={formatDate(blog.createdAt)}
+                url={`/blog/${blog.slug}`}
+                imageSrc={blog.image}
+              />
+            );
+          })}
         </div>
       </section>
     </main>

@@ -87,6 +87,20 @@
   font-size: 45px;
 }
 
+.react-quill-display > h2 {
+  font-size: 24px;
+  border-bottom: 0.5px solid #27272a;
+  font: bold;
+  padding-bottom: 15px;
+}
+
+.react-quill-display > h1 {
+  font-size: 28px;
+  border-bottom: 0.5px solid #27272a;
+  font: bold;
+  padding-bottom: 15px;
+}
+
 @media screen and (max-width: 768px) {
   .quill > .ql-container > .ql-editor > h2 {
     color: var(--primary);

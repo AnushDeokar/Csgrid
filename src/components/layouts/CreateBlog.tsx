@@ -160,7 +160,7 @@ function CreateBlog({ userId }: { userId: string }): React.ReactNode {
           )}
         </div>
       </div>
-      <div className="lg:px-[25%] xl:px-[27%] md:px-[10%] px-[2%] leading-7">
+      <div className="lg:px-[25%] xl:px-[27%] md:px-[10%] px-[2%] leading-7 pb-40">
         <ReactQuill
           className="w-full outline-none border-0 text-lg"
           theme="bubble"
