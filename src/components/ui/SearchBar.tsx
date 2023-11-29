@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   CommandDialog,
   CommandInput,
@@ -12,10 +12,35 @@ import {
 } from "./Command";
 import { FileIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 function SearchBar(): React.ReactNode {
   const router = useRouter();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const [blogs, setBlogs] = useState<any[]>([]);
+
+  const debounceTest = <T extends (...args: any[]) => void>(func: T) => {
+    let timer: any;
+    return function (this: any, ...args: Parameters<T>) {
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        timer = null;
+        func.apply(this, args);
+      }, 1000);
+    };
+  };
+
+  const handleChangeTest = async (value: string) => {
+    setIsLoading(true);
+    const res: any = await axios.get(`/api/post?query=${value}`);
+    setBlogs(res.data.blogs);
+    setIsLoading(false);
+  };
+
+  // eslint-disable-next-line
+  const optimizedFn = useCallback(debounceTest(handleChangeTest), []);
 
   const runCommand = React.useCallback((command: () => unknown) => {
     setOpen(false);
@@ -60,29 +85,40 @@ function SearchBar(): React.ReactNode {
         <div className="flex-1 text-sm font-semibold hidden md:flex">
           Search Blogs...
         </div>
-        <div className="bg-secondary px-2 flex h-full items-center rounded-sm border hidden md:flex">
+        <div className="bg-secondary px-2 h-full items-center rounded-sm border hidden md:flex">
           <span className="text-xs m-auto">Ctrl+k</span>
         </div>
       </div>
 
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput placeholder="Search Blogs ..." />
+        <CommandInput
+          placeholder="Search Blogs ..."
+          onValueChange={optimizedFn}
+        />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
-          <CommandGroup heading="Links">
-            <CommandItem
-              key="/blog1"
-              value="Blog 1"
-              onSelect={() => {
-                runCommand(() => {
-                  router.push("/blog/1");
-                });
-              }}
-            >
-              <FileIcon className="mr-2 h-4 w-4" />
-              Blog 1
-            </CommandItem>
-          </CommandGroup>
+          {!isLoading && (
+            <>
+              {["Blogs"].map((t, i) => (
+                <CommandGroup heading={t} key={i}>
+                  {blogs.map((blog, ind) => (
+                    <CommandItem
+                      key={blog.id}
+                      value={blog.id}
+                      onSelect={() => {
+                        runCommand(() => {
+                          router.push(`/blog/${blog.slug}`);
+                        });
+                      }}
+                    >
+                      <FileIcon className="mr-2 h-4 w-4" />
+                      {blog.title}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              ))}
+            </>
+          )}
           {/* {docsConfig.sidebarNav.map((group) => (
             <CommandGroup key={group.title} heading={group.title}>
               {group.items.map((navItem) => (

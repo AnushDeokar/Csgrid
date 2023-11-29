@@ -39,3 +39,34 @@ export async function getBlogBySlug(slug: any): Promise<any> {
     throw error;
   }
 }
+
+export async function searchBlogs(query: string) {
+  try {
+    const lowerCasequery = query.toLocaleLowerCase();
+    type PickyPost = Pick<Post, "id" | "slug" | "title">;
+    const blogPosts: PickyPost[] = await prisma.post.findMany({
+      where: {
+        slug: {
+          contains: lowerCasequery,
+        },
+      },
+      select: {
+        title: true,
+        id: true,
+        slug: true,
+      },
+    });
+
+    console.log(query, blogPosts);
+    if (!blogPosts) {
+      // Handle the case where no post is found with the specified slug
+      return null;
+    }
+
+    return blogPosts;
+  } catch (error) {
+    // Handle any other errors that may occur during the query
+    console.error("Error fetching blog post:", error);
+    throw error;
+  }
+}

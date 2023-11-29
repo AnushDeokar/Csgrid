@@ -2,10 +2,14 @@ import React from "react";
 import { getBlogBySlug } from "@/app/actions/post";
 import type { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { formatDate } from "@/utils/date";
+import { notFound } from "next/navigation";
 
 async function BlogPage({ params }: { params: Params }) {
   const { slug } = params;
   const blogPost = await getBlogBySlug(slug);
+  if (!blogPost) {
+    notFound();
+  }
 
   return (
     <div className="lg:px-[25%] xl:px-[27%] md:px-[10%] px-[2%] leading-7 flex flex-col gap-4">

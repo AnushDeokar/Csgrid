@@ -9,7 +9,7 @@ import { CropIcon } from "@radix-ui/react-icons";
 async function MainNavbar(): Promise<any> {
   const user: User | null = await currentUser();
 
-  // type LimitedUser = Pick<User, 'firstName' | 'lastName' | 'imageUrl' | 'emailAddresse'>;
+  // type LimitedUser = Pick<User, 'firstName' | 'lastName' | 'imageUrl' | 'emailAddress'>;
 
   const passedUser: any = {
     firstName: user?.firstName as string,
@@ -36,7 +36,6 @@ async function MainNavbar(): Promise<any> {
           <NavbarSigninBtn user={passedUser} />
         </div>
       </div>
-      <div className="flex w-full md:hidden">Mobile Navbar</div>
     </>
   );
 }
