@@ -25,7 +25,7 @@ function BlogCard({
       <img src={imageSrc} className="rounded-md w-full" />
       <h3 className="font-semibold text-2xl">{title}</h3>
       <p className="text-muted-foreground w-full">{brief} ...</p>
-      <p className="text-left text-muted-foreground mt-4">{date}</p>
+      <p className="text-left text-muted-foreground mt-1">{date}</p>
     </div>
   );
 }

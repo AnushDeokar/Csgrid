@@ -1,18 +1,18 @@
 export const categories = [
   {
     name: "Frontend Development",
-    path: "/categories/frontend-development",
+    href: "/categories/frontend-development",
   },
   {
     name: "CS Fundamentals",
-    path: "/categories/cs-fundamentals",
+    href: "/categories/cs-fundamentals",
   },
   {
     name: "Cloud Computing",
-    path: "/categories/cloud-computing",
+    href: "/categories/cloud-computing",
   },
   {
     name: "Backend Development",
-    path: "/categories/backend-development",
+    href: "/categories/backend-development",
   },
 ];

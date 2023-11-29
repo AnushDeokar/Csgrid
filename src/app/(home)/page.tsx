@@ -5,6 +5,7 @@ import Link from "next/link";
 import { getLatestBlogs } from "../actions/post";
 import type { Post } from "@prisma/client";
 import { formatDate } from "@/utils/date";
+import { GitHubLogoIcon } from "@radix-ui/react-icons";
 
 export default async function Home() {
   const latestBlogs: Post[] = await getLatestBlogs();
@@ -12,7 +13,8 @@ export default async function Home() {
   return (
     <main className=" text-center lg:pt-40 pt-20 md:pt-30 ">
       <div className="mb-24 px-[5%] lg:px-[12%]">
-        <div className="m-auto bg-muted h-auto hover:bg-secondary/90 w-fit text-sm px-4 py-2 cursor-pointer rounded-md font-semibold mb-4">
+        <div className="m-auto bg-muted h-auto hover:bg-secondary/90 w-fit md:text-sm text-xs px-4 py-2 cursor-pointer rounded-md font-semibold mb-4 flex items-center gap-2">
+          <GitHubLogoIcon width={15} height={15} />
           Give a star on github
         </div>
         <h1
@@ -46,12 +48,11 @@ export default async function Home() {
         <div className="grid lg:grid-cols-4 grid-cols-1 sm:grid-cols-2 lg:px=[8%] gap-4 my-10">
           {categories.map((category, ind) => {
             return (
-              <div
-                key={ind}
-                className="border w-full h-40 flex flex-col justify-center hover:bg-secondary/90 cursor-pointer rounded-md"
-              >
-                {category.name}
-              </div>
+              <Link key={ind} href={category.href}>
+                <div className="border w-full h-40 flex flex-col justify-center hover:bg-secondary/90 cursor-pointer rounded-md">
+                  {category.name}
+                </div>
+              </Link>
             );
           })}
         </div>

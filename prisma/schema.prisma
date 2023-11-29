@@ -39,4 +39,5 @@ model Category{
     name String @unique
     postIds String[] @db.ObjectId
     posts Post[]
+    slug String @unique
 }
