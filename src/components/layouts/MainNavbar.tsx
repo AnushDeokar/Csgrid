@@ -5,6 +5,7 @@ import NavbarSigninBtn from "../ui/NavbarSigninBtn";
 import { currentUser } from "@clerk/nextjs";
 import type { User } from "@clerk/nextjs/server";
 import { CropIcon } from "@radix-ui/react-icons";
+import Link from "next/link";
 
 async function MainNavbar(): Promise<any> {
   const user: User | null = await currentUser();
@@ -26,8 +27,10 @@ async function MainNavbar(): Promise<any> {
       >
         <div className="font-sans flex items-center justify-between gap-10">
           <div className="flex items-center gap-2">
-            <CropIcon width={18} height={18} />
-            <span className="font-bold hidden sm:flex">Csgrid</span>
+            <Link href="/">
+              <CropIcon width={18} height={18} />
+              <span className="font-bold hidden sm:flex">Csgrid</span>
+            </Link>
           </div>
           <NavBarDropDownList />
         </div>
