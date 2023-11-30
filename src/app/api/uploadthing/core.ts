@@ -17,7 +17,6 @@ export const ourFileRouter = {
       if (!user) throw new Error("Unauthorized");
 
       // Whatever is returned here is accessible in onUploadComplete as `metadata`
-      console.log(user);
       return { userId: user.id };
     })
     .onUploadError((error) => {

@@ -1,6 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import { ImageIcon } from "@radix-ui/react-icons";
+import {
+  Cross2Icon,
+  ImageIcon,
+  PlusCircledIcon,
+  PlusIcon,
+} from "@radix-ui/react-icons";
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.bubble.css";
 import { Button } from "@/components/ui/Button";
@@ -10,6 +15,30 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { generateReactHelpers } from "@uploadthing/react/hooks";
 import type { OurFileRouter } from "@/app/api/uploadthing/core";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/Dialog";
+import { Label } from "@radix-ui/react-label";
+import { Input } from "../ui/Input";
+import { Badge } from "../ui/badge";
 
 // eslint-disable-next-line
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
@@ -25,6 +54,8 @@ function CreateBlog({ userId }: { userId: string }): React.ReactNode {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [content, setContent] = useState("");
   const [isPending, setIsPending] = useState<boolean>(false);
+  const [tags, setTags] = useState<string[]>([]);
+  const [currentTag, setCurrentTag] = useState<string>("");
   const { startUpload } = useUploadThing("imageUploader");
 
   const handleClick = () => {
@@ -62,7 +93,7 @@ function CreateBlog({ userId }: { userId: string }): React.ReactNode {
 
   const handlePublish = async (event: React.MouseEvent<HTMLButtonElement>) => {
     try {
-      if (userId && file) {
+      if (userId && file && tags.length > 0) {
         setIsPending(true);
         const files: File[] = [];
         files.push(file);
@@ -88,6 +119,8 @@ function CreateBlog({ userId }: { userId: string }): React.ReactNode {
           });
       } else if (!file) {
         toast.error("Kindly Upload a Blog Cover Image!");
+      } else {
+        toast.error("Add atleast one tag to publish!");
       }
     } catch (err) {
       console.log(err);
@@ -98,10 +131,26 @@ function CreateBlog({ userId }: { userId: string }): React.ReactNode {
     <React.Fragment>
       <div className="lg:px-[25%] xl:px-[27%] md:px-[10%] px-[2%] leading-7 flex flex-col gap-4 pt-10">
         <div className="flex justify-between mb-4">
-          <Button className="w-fit" variant="destructive">
-            Discard
-            <span className="sr-only">Publish</span>
-          </Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="outline">Discard</Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. This will Discard you Blog and
+                  the data will be lost.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={() => router.push("/")}>
+                  Discard Anyways
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
           <Button
             className="w-fit"
             // eslint-disable-next-line
@@ -150,12 +199,77 @@ function CreateBlog({ userId }: { userId: string }): React.ReactNode {
                 onChange={handleFileChange}
                 style={{ display: "none" }}
               />
-              <button>
-                <label htmlFor="image" className="flex gap-2 items-center">
+              <Button variant="outline" className="text-muted-foreground">
+                <Label
+                  htmlFor="image"
+                  className="flex gap-2 items-center cursor-pointer"
+                >
                   <ImageIcon width={20} height={20} />
                   <span className="text-sm">Upload Cover Image</span>
-                </label>
-              </button>
+                </Label>
+              </Button>
+
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline" className="text-muted-foreground">
+                    <PlusCircledIcon width={20} height={20} />
+                    <span className="text-sm">Add/Edit Tags</span>
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-md">
+                  <DialogHeader>
+                    <DialogTitle>Add Categories</DialogTitle>
+                    <DialogDescription>
+                      At tags and Categories to your blog to make it stand out
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="flex items-center space-x-2">
+                    <div className="grid flex-1 gap-2">
+                      <Label htmlFor="tag" className="sr-only">
+                        Tag
+                      </Label>
+                      <Input
+                        onChange={(e) => setCurrentTag(e.target.value)}
+                        value={currentTag}
+                      />
+                    </div>
+                    <Button
+                      type="submit"
+                      size="sm"
+                      className="px-3"
+                      onClick={() => {
+                        setTags([...tags, currentTag]);
+                        setCurrentTag("");
+                      }}
+                    >
+                      <span className="sr-only">Add</span>
+                      <PlusIcon className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  <DialogFooter className="sm:justify-start">
+                    <DialogClose asChild>
+                      <div className="flex gap-2">
+                        {tags.map((tag, i) => (
+                          <Badge
+                            variant="secondary"
+                            key={i}
+                            className="p-2 flex gap-1 items-center"
+                            onClick={() => {
+                              const newTags = tags.filter(
+                                (t, ind) => i !== ind
+                              );
+                              setTags(newTags);
+                            }}
+                          >
+                            <span>{tag}</span>
+                            <Cross2Icon width={14} height={14} />
+                          </Badge>
+                        ))}
+                      </div>
+                    </DialogClose>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
             </div>
           )}
         </div>

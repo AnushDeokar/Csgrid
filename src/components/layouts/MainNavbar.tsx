@@ -26,12 +26,12 @@ async function MainNavbar(): Promise<any> {
       h-16 border-b justify-between top-0 bg-background"
       >
         <div className="font-sans flex items-center justify-between gap-10">
-          <div className="flex items-center gap-2">
-            <Link href="/">
+          <Link href="/">
+            <div className="flex items-center gap-2">
               <CropIcon width={18} height={18} />
               <span className="font-bold hidden sm:flex">Csgrid</span>
-            </Link>
-          </div>
+            </div>
+          </Link>
           <NavBarDropDownList />
         </div>
         <div className="flex items-center gap-4">

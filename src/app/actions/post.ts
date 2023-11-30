@@ -57,7 +57,6 @@ export async function searchBlogs(query: string) {
       },
     });
 
-    console.log(query, blogPosts);
     if (!blogPosts) {
       // Handle the case where no post is found with the specified slug
       return null;

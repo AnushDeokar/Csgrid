@@ -58,11 +58,13 @@ function NavbarSigninBtn({ user }: NavbarSigninBtnProps): React.ReactNode {
                   Profile
                   <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Pencil2Icon className="mr-2 h-4 w-4" aria-hidden="true" />
-                  Write Blog
-                  <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-                </DropdownMenuItem>
+                <Link href="/write">
+                  <DropdownMenuItem>
+                    <Pencil2Icon className="mr-2 h-4 w-4" aria-hidden="true" />
+                    Write Blog
+                    <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                </Link>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
               <SignOutButton>

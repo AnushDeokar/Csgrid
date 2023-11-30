@@ -6,17 +6,20 @@ import { getLatestBlogs } from "../actions/post";
 import type { Post } from "@prisma/client";
 import { formatDate } from "@/utils/date";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
+import { me } from "@/config/layout";
 
 export default async function Home() {
   const latestBlogs: Post[] = await getLatestBlogs();
 
   return (
-    <main className=" text-center lg:pt-40 pt-20 md:pt-30 ">
+    <main className=" text-center lg:pt-30 pt-20 md:pt-30 ">
       <div className="mb-24 px-[5%] lg:px-[12%]">
-        <div className="m-auto bg-muted h-auto hover:bg-secondary/90 w-fit md:text-sm text-xs px-4 py-2 cursor-pointer rounded-md font-semibold mb-4 flex items-center gap-2">
-          <GitHubLogoIcon width={15} height={15} />
-          Give a star on github
-        </div>
+        <Link href={me.github}>
+          <div className="m-auto bg-muted h-auto hover:bg-secondary/90 w-fit md:text-sm text-xs px-4 py-2 cursor-pointer rounded-md font-semibold mb-4 flex items-center gap-2">
+            <GitHubLogoIcon width={15} height={15} />
+            Give a star on github
+          </div>
+        </Link>
         <h1
           className="text-3xl font-bold leading-tight tracking-tighter md:text-5xl lg:text-7xl lg:leading-[1.1]"
           style={{ fontWeight: "650" }}
