@@ -28,7 +28,6 @@ import {
 } from "@/components/ui/alert-dialog";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -103,7 +102,7 @@ function CreateBlog({ userId }: { userId: string }): React.ReactNode {
           title,
           slug: slugify(title),
           content,
-          category: "Frontend Development",
+          categories: tags.map((tag) => tag.toLowerCase()),
           image: res ? res[0].url : "",
           userId,
         };
@@ -247,26 +246,22 @@ function CreateBlog({ userId }: { userId: string }): React.ReactNode {
                     </Button>
                   </div>
                   <DialogFooter className="sm:justify-start">
-                    <DialogClose asChild>
-                      <div className="flex gap-2">
-                        {tags.map((tag, i) => (
-                          <Badge
-                            variant="secondary"
-                            key={i}
-                            className="p-2 flex gap-1 items-center"
-                            onClick={() => {
-                              const newTags = tags.filter(
-                                (t, ind) => i !== ind
-                              );
-                              setTags(newTags);
-                            }}
-                          >
-                            <span>{tag}</span>
-                            <Cross2Icon width={14} height={14} />
-                          </Badge>
-                        ))}
-                      </div>
-                    </DialogClose>
+                    <div className="flex gap-2 flex-wrap">
+                      {tags.map((tag, i) => (
+                        <Badge
+                          variant="secondary"
+                          key={i}
+                          className="p-2 flex gap-1 items-center"
+                          onClick={() => {
+                            const newTags = tags.filter((t, ind) => i !== ind);
+                            setTags(newTags);
+                          }}
+                        >
+                          <span>{tag}</span>
+                          <Cross2Icon width={14} height={14} />
+                        </Badge>
+                      ))}
+                    </div>
                   </DialogFooter>
                 </DialogContent>
               </Dialog>

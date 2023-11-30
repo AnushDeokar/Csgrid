@@ -20,7 +20,7 @@ model User{
     posts Post[]
 }
 
-model Post{
+model Post {
     id String @id @default(auto()) @map("_id") @db.ObjectId
     title String
     content String
@@ -28,16 +28,16 @@ model Post{
     slug String @unique
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now())
-    userId String 
+    userId String
     user User @relation(fields: [userId], references: [clerkUserId])
-    categoryName String 
-    category Category @relation(fields: [categoryName], references: [name])
+    categoryIds String[] @db.ObjectId
+    categories Category[] @relation(fields: [categoryIds], references: [id])
 }
 
-model Category{
+model Category {
     id String @id @default(auto()) @map("_id") @db.ObjectId
     name String @unique
     postIds String[] @db.ObjectId
-    posts Post[]
+    posts Post[] @relation(fields: [postIds], references: [id])
     slug String @unique
 }

@@ -3,6 +3,8 @@ import { getBlogBySlug } from "@/app/actions/post";
 import type { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { formatDate } from "@/utils/date";
 import { notFound } from "next/navigation";
+import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
 
 async function BlogPage({ params }: { params: Params }) {
   const { slug } = params;
@@ -39,6 +41,17 @@ async function BlogPage({ params }: { params: Params }) {
         className="react-quill-display"
         dangerouslySetInnerHTML={{ __html: blogPost?.content as string }}
       />
+      <div className="my-4 flex flex-wrap text-lg">
+        {blogPost?.categories.map(
+          (category: { name: string; slug: string }, i: number) => (
+            <Link href={`/categories/${category?.slug}`} key={i}>
+              <Badge variant="secondary" className="p-2">
+                {category.name}
+              </Badge>
+            </Link>
+          )
+        )}
+      </div>
     </div>
   );
 }
