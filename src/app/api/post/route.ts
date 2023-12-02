@@ -1,5 +1,6 @@
 import { searchBlogs } from "@/app/actions/post";
 import prisma from "@/libs/prismadb";
+import type { Post } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 const slugify = (str: string) =>
@@ -34,7 +35,7 @@ export async function POST(request: Request, response: Response) {
     } else {
       const newCategory = await prisma.category.create({
         data: {
-          name: categories[i].toLowerCase(),
+          name: categories[i],
           slug: slugify(categories[i]),
         },
       });
@@ -43,8 +44,9 @@ export async function POST(request: Request, response: Response) {
     }
   }
 
+  let createdPost: Post;
   try {
-    await prisma.post.create({
+    createdPost = await prisma.post.create({
       data: {
         title: data.title,
         content: data.content,
@@ -58,7 +60,20 @@ export async function POST(request: Request, response: Response) {
     throw new Error("Failed to Create a Blog Post!");
   }
 
-  return NextResponse.json({ success: true, msg: "User Successfully Created" });
+  // Update categories with the postId
+  await Promise.all(
+    categoriesId.map(async (categoryId) => {
+      await prisma.category.update({
+        where: { id: categoryId },
+        data: {
+          postIds: {
+            push: createdPost.id,
+          },
+        },
+      });
+    })
+  );
+  return NextResponse.json({ success: true, msg: "Post Successfully Created" });
 }
 
 export async function GET(request: any) {

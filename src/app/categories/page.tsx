@@ -8,13 +8,13 @@ import { notFound } from "next/navigation";
 type BlogPickType = Pick<Post, "title" | "image" | "slug" | "createdAt">;
 async function CategoryMainPage() {
   const categories = await getCategoryBySlug([]);
-  console.log(categories);
+
   if (!categories) {
     return notFound();
   }
   return (
     <div className="min-h-[240px] px-[5%] mt-8">
-      <h1 className="lg:text-3xl text-2xl font-bold">Csgrid Latest Blogs</h1>
+      <h1 className="lg:text-3xl text-2xl font-bold">Latest Published Blogs</h1>
       <p className="text-muted-foreground mt-1">
         Expore the latest and the best blogs.
       </p>

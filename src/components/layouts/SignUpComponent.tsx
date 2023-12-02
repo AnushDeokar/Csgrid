@@ -10,6 +10,7 @@ import Link from "next/link";
 import { useSignUp } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import OAuthSignIn from "./OauthSignin";
 
 interface FormValues {
   firstname: string;
@@ -64,16 +65,7 @@ export function SignUpComponent(): React.ReactNode {
   };
   return (
     <CardContent className="grid gap-4">
-      <div className="grid grid-cols-2 gap-6">
-        <Button variant="outline">
-          <Icons.gitHub className="mr-2 h-4 w-4" />
-          Github
-        </Button>
-        <Button variant="outline">
-          <Icons.google className="mr-2 h-4 w-4" />
-          Google
-        </Button>
-      </div>
+      <OAuthSignIn />
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
           <span className="w-full border-t" />

@@ -3,7 +3,12 @@ import React, { useState, useEffect } from "react";
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import { useTheme } from "next-themes";
 
-export const ThemeSwitcher = (): React.ReactElement | null => {
+interface ThemeSwitcherInterface {
+  isreverse: boolean;
+}
+export const ThemeSwitcher = ({
+  isreverse,
+}: ThemeSwitcherInterface): React.ReactElement | null => {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
 
@@ -23,9 +28,13 @@ export const ThemeSwitcher = (): React.ReactElement | null => {
         }}
       >
         {theme === "light" ? (
-          <MoonIcon className="h-5 w-5" />
+          <MoonIcon
+            className={isreverse ? `h-5 w-5 text-secondary` : `h-5 w-5`}
+          />
         ) : (
-          <SunIcon className="h-5 w-5" />
+          <SunIcon
+            className={isreverse ? `h-5 w-5 text-secondary` : `h-5 w-5`}
+          />
         )}
       </button>
     </div>

@@ -40,7 +40,7 @@ function MainFooter(): React.ReactNode {
           </Link>
         </div>
         <div>
-          <ThemeSwitcher />
+          <ThemeSwitcher isreverse={false} />
         </div>
       </div>
     </footer>
