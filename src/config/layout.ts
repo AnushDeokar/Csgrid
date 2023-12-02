@@ -46,19 +46,19 @@ export const footerData = [
     items: [
       {
         name: "About",
-        href: "https://clerk.com/",
+        href: "/about",
       },
       {
         name: "Contact",
-        href: "https://www.mongodb.com/",
+        href: "/contact",
       },
       {
         name: "Terms",
-        href: "https://www.prisma.io/",
+        href: "/terms",
       },
       {
         name: "Privacy",
-        href: "https://uploadthing.com/",
+        href: "/privacy",
       },
     ],
   },

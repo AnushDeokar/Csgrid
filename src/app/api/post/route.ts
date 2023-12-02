@@ -10,6 +10,11 @@ const slugify = (str: string) =>
     .replace(/[\s_-]+/g, "-")
     .replace(/^-+|-+$/g, "");
 
+const generateRandomNumber = (): number => {
+  // Generate a random number between 100000 and 999999
+  return Math.floor(100000 + Math.random() * 900000);
+};
+
 export async function POST(request: Request, response: Response) {
   const data = await request.json();
 
@@ -20,7 +25,7 @@ export async function POST(request: Request, response: Response) {
   for (let i = 0; i < len; i++) {
     const category = await prisma.category.findUnique({
       where: {
-        name: categories[i].toLowerCase(),
+        slug: slugify(categories[i]),
       },
     });
 
@@ -29,7 +34,7 @@ export async function POST(request: Request, response: Response) {
     } else {
       const newCategory = await prisma.category.create({
         data: {
-          name: categories[i],
+          name: categories[i].toLowerCase(),
           slug: slugify(categories[i]),
         },
       });
@@ -44,7 +49,7 @@ export async function POST(request: Request, response: Response) {
         title: data.title,
         content: data.content,
         categoryIds: categoriesId,
-        slug: data.slug,
+        slug: data.slug + "-" + generateRandomNumber().toString(),
         userId: data.userId,
         image: data.image,
       },

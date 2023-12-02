@@ -14,12 +14,14 @@ export default async function Home() {
   return (
     <main className=" text-center lg:pt-30 pt-20 md:pt-30 ">
       <div className="mb-24 px-[5%] lg:px-[12%]">
-        <Link href={me.github}>
-          <div className="m-auto bg-muted h-auto hover:bg-secondary/90 w-fit md:text-sm text-xs px-4 py-2 cursor-pointer rounded-md font-semibold mb-4 flex items-center gap-2">
-            <GitHubLogoIcon width={15} height={15} />
-            Give a star on github
-          </div>
+        <Link
+          href={me.github}
+          className="m-auto bg-muted h-auto hover:bg-secondary/90 w-fit md:text-sm text-xs px-4 py-2 cursor-pointer rounded-md font-semibold mb-4 flex items-center gap-2"
+        >
+          <GitHubLogoIcon width={15} height={15} />
+          Give a star on github
         </Link>
+
         <h1
           className="text-3xl font-bold leading-tight tracking-tighter md:text-5xl lg:text-7xl lg:leading-[1.1]"
           style={{ fontWeight: "650" }}
@@ -29,9 +31,11 @@ export default async function Home() {
         <p className="text-muted-foreground text-md sm:text-lg md:text-xl my-4 mt-6 lg:px-40 xl:px-80">
           Read and Write CS blogs from around the world.
         </p>
-        <button className="bg-primary text-primary-foreground shadow hover:bg-primary/90 text-xs py-2 px-4 font-semibold rounded-md">
-          Read Blog
-        </button>
+        <Link href="/categories">
+          <button className="bg-primary text-primary-foreground shadow hover:bg-primary/90 text-xs py-2 px-4 font-semibold rounded-md">
+            Read Blog
+          </button>
+        </Link>
         <Link href="/write">
           <button className="border shadow hover:hover:bg-secondary/90 text-xs py-2 px-4 font-semibold rounded-md ml-4">
             Write Blog
@@ -52,8 +56,9 @@ export default async function Home() {
           {categories.map((category, ind) => {
             return (
               <Link key={ind} href={category.href}>
-                <div className="border w-full h-40 flex flex-col justify-center hover:bg-secondary/90 cursor-pointer rounded-md">
-                  {category.name}
+                <div className="border w-full h-40 flex flex-col justify-center text-left hover:bg-secondary/90 cursor-pointer rounded-md px-[10%]">
+                  <h1 className="font-bold">{category.name}</h1>
+                  <p className="text-muted-foreground">4 Blogs</p>
                 </div>
               </Link>
             );

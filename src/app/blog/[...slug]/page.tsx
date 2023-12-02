@@ -41,7 +41,7 @@ async function BlogPage({ params }: { params: Params }) {
         className="react-quill-display"
         dangerouslySetInnerHTML={{ __html: blogPost?.content as string }}
       />
-      <div className="my-4 flex flex-wrap text-lg">
+      <div className="my-4 flex flex-wrap text-lg gap-2">
         {blogPost?.categories.map(
           (category: { name: string; slug: string }, i: number) => (
             <Link href={`/categories/${category?.slug}`} key={i}>

@@ -3,6 +3,17 @@ import prisma from "@/libs/prismadb";
 
 export async function getCategoryBySlug(slug: any): Promise<any> {
   try {
+    if (slug.length === 0) {
+      const AllPosts: any = await prisma.post.findMany({
+        select: {
+          title: true,
+          slug: true,
+          image: true,
+          createdAt: true,
+        },
+      });
+      return AllPosts;
+    }
     const categoryAndPosts: Category | null = await prisma.category.findUnique({
       where: {
         slug: slug[0],
