@@ -12,6 +12,8 @@ export async function POST(request: Request, response: Response) {
       email: userData.email,
       lastName: userData.lastName,
       clerkUserId: userData.clerkUserId,
+      about: "",
+      brief: "New to Csgrid",
       slug:
         slugify(userData.firstName + " " + userData.lastName) +
         "-" +
@@ -20,4 +22,23 @@ export async function POST(request: Request, response: Response) {
   });
 
   return NextResponse.json({ success: true, msg: "User Successfully Created" });
+}
+
+export async function PUT(request: Request, response: Response) {
+  const body = await request.json();
+  const userData = body;
+  await prisma.user.update({
+    where: {
+      id: userData.id,
+    },
+    data: {
+      about: userData.about,
+      brief: userData.brief,
+    },
+  });
+
+  return NextResponse.json({
+    success: true,
+    msg: "User Info Successfully updated",
+  });
 }

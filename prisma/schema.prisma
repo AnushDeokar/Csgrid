@@ -15,6 +15,7 @@ model User{
     email String @unique
     image String?
     brief String?
+    about String
     slug String @unique
     createdAt DateTime @default(now())
     postIds String[] @db.ObjectId

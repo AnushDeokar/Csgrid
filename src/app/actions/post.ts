@@ -22,6 +22,7 @@ export async function getBlogBySlug(slug: any): Promise<any> {
           select: {
             firstName: true,
             lastName: true,
+            slug: true,
           },
         },
         categories: {
@@ -60,6 +61,57 @@ export async function searchBlogs(query: string) {
         title: true,
         id: true,
         slug: true,
+      },
+    });
+
+    if (!blogPosts) {
+      // Handle the case where no post is found with the specified slug
+      return null;
+    }
+
+    return blogPosts;
+  } catch (error) {
+    // Handle any other errors that may occur during the query
+    console.error("Error fetching blog post:", error);
+    throw error;
+  }
+}
+
+interface PickyBlogPost {
+  title: string;
+  slug: string | null;
+  createdAt: Date;
+  image: string;
+  user: {
+    firstName: string;
+    lastName: string;
+    brief: string | null;
+    id: string;
+    about: string;
+  };
+}
+export async function getBlogsByUser(query: string) {
+  try {
+    const blogPosts: PickyBlogPost[] = await prisma.post.findMany({
+      where: {
+        user: {
+          clerkUserId: query,
+        },
+      },
+      select: {
+        title: true,
+        slug: true,
+        createdAt: true,
+        image: true,
+        user: {
+          select: {
+            firstName: true,
+            lastName: true,
+            brief: true,
+            id: true,
+            about: true,
+          },
+        },
       },
     });
 
