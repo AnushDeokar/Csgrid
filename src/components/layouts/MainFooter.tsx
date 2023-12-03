@@ -6,7 +6,7 @@ import { footerData, me } from "@/config/layout";
 
 function MainFooter(): React.ReactNode {
   return (
-    <footer className="border-t mt-[100px] pt-10">
+    <footer className="border-t absolute b-0 w-full pt-10">
       <div className="grid lg:grid-cols-5 md:grid-cols-4 gap-y-8  gap-x-2 px-[2%] lg:px-[5%] grid-cols-1 sm:grid-cols-2">
         <Link href="/">
           <h1 className="font-semibold text-lg">

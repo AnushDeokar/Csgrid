@@ -1,4 +1,5 @@
 import prisma from "@/libs/prismadb";
+import { generateRandomNumber, slugify } from "@/utils/date";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request, response: Response) {
@@ -11,6 +12,10 @@ export async function POST(request: Request, response: Response) {
       email: userData.email,
       lastName: userData.lastName,
       clerkUserId: userData.clerkUserId,
+      slug:
+        slugify(userData.firstName + " " + userData.lastName) +
+        "-" +
+        generateRandomNumber(),
     },
   });
 
