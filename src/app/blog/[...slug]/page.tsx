@@ -19,23 +19,25 @@ async function BlogPage({ params }: { params: Params }) {
         {formatDate(blogPost?.createdAt)} - 4min
       </p>
       <h1 className="md:text-5xl text-3xl font-bold">{blogPost?.title}</h1>
-
-      <div className="flex h-10 my-4 items-center gap-2">
-        <img
-          src={`https://api.multiavatar.com/${
-            blogPost?.user.firstName.length + blogPost?.user.lastName.length
-          }.svg`}
-          className="h-full rounded-full"
-        />
-        <div className="flex flex-col justify-center gap-0">
-          <h3 className="font-semibold">
-            {blogPost?.user?.firstName} {blogPost?.user?.lastName}
-          </h3>
-          <p className="text-muted-foreground text-sm">
-            Software developer | Tech Enthusisast
-          </p>
+      <Link href={`/profile/${blogPost?.user?.slug}`}>
+        <div className="flex h-10 my-4 items-center gap-2">
+          <img
+            src={`https://api.multiavatar.com/${
+              blogPost?.user.firstName.length + blogPost?.user.lastName.length
+            }.svg`}
+            className="h-full rounded-full"
+          />
+          <div className="flex flex-col justify-center gap-0">
+            <h3 className="font-semibold">
+              {blogPost?.user?.firstName} {blogPost?.user?.lastName}
+            </h3>
+            <p className="text-muted-foreground text-sm">
+              {blogPost?.user?.brief}
+            </p>
+          </div>
         </div>
-      </div>
+      </Link>
+
       <img src={blogPost?.image} className="rounded-md w-full" />
       <div
         className="react-quill-display"

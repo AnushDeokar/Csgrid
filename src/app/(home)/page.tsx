@@ -4,7 +4,7 @@ import BlogCard from "@/components/ui/BlogCard";
 import Link from "next/link";
 import { getLatestBlogs } from "../actions/post";
 import type { Post } from "@prisma/client";
-import { formatDate } from "@/utils/date";
+import { extractFirst15Words, formatDate } from "@/utils/date";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { me } from "@/config/layout";
 
@@ -82,7 +82,7 @@ export default async function Home() {
               <BlogCard
                 key={ind}
                 title={blog.title}
-                brief="Discover the diverse styles of skate board and unleash you"
+                brief={extractFirst15Words(blog.content) as string}
                 date={formatDate(blog.createdAt)}
                 url={`/blog/${blog.slug}`}
                 imageSrc={blog.image}

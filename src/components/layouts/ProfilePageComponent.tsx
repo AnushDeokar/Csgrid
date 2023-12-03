@@ -47,7 +47,9 @@ function ProfilePageComponent({
     <div className="w-full h-80 py-8  hidden md:block">
       <img
         className="h-20 w-20 rounded-full"
-        src={`https://api.multiavatar.com/${`45`}.svg`}
+        src={`https://api.multiavatar.com/${
+          user.firstName.length + user.lastName.length
+        }.svg`}
       />
       <p className="font-lg font-semibold mt-4 mb-2">
         {user.firstName} {user.lastName}

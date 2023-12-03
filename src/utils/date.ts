@@ -15,3 +15,14 @@ export const slugify = (str: string) =>
     .replace(/[^\w\s-]/g, "")
     .replace(/[\s_-]+/g, "-")
     .replace(/^-+|-+$/g, "");
+
+export function extractFirst15Words(htmlString: string) {
+  // Use regular expression to extract all text content within tags
+  const allTextContent = htmlString.replace(/<[^>]*>/g, " ");
+
+  // Use regular expression to extract the first 25 words
+  const words = allTextContent.match(/\b\w+\b/g);
+  const first25Words = words ? words.slice(0, 15).join(" ") : null;
+
+  return first25Words;
+}

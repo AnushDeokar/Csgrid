@@ -23,6 +23,7 @@ export async function getBlogBySlug(slug: any): Promise<any> {
             firstName: true,
             lastName: true,
             slug: true,
+            brief: true,
           },
         },
         categories: {
