@@ -25,7 +25,13 @@ interface IUser {
   about: string;
 }
 
-function ProfilePageComponent({ user }: { user: IUser }) {
+function ProfilePageComponent({
+  user,
+  isCurrentUser,
+}: {
+  user: IUser;
+  isCurrentUser: boolean;
+}) {
   const [brief, setBrief] = useState<string | null>(user.brief);
   const [about, setAbout] = useState<string>(user.about);
 
@@ -50,48 +56,50 @@ function ProfilePageComponent({ user }: { user: IUser }) {
       <p className="text-sm text-muted-foreground font-italic">
         {user.about ? user.about : "Write Down your Description ...."}
       </p>
-      <AlertDialog>
-        <AlertDialogTrigger asChild>
-          <Button className="mt-4" variant="secondary">
-            Edit Info
-          </Button>
-        </AlertDialogTrigger>
-        <AlertDialogContent className="sm:max-w-md">
-          <AlertDialogHeader>
-            <AlertDialogTitle>Edit Bio</AlertDialogTitle>
-            <AlertDialogDescription>
-              Edit your tagline and Description
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <div className="flex items-center space-x-2">
-            <div className="grid flex-1 gap-2">
-              <Label htmlFor="tag">Brief</Label>
-              <Input
-                onChange={(e) => setBrief(e.target.value)}
-                value={brief as string}
-              />
+      {isCurrentUser && (
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button className="mt-4" variant="secondary">
+              Edit Info
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent className="sm:max-w-md">
+            <AlertDialogHeader>
+              <AlertDialogTitle>Edit Bio</AlertDialogTitle>
+              <AlertDialogDescription>
+                Edit your tagline and Description
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <div className="flex items-center space-x-2">
+              <div className="grid flex-1 gap-2">
+                <Label htmlFor="tag">Brief</Label>
+                <Input
+                  onChange={(e) => setBrief(e.target.value)}
+                  value={brief as string}
+                />
+              </div>
             </div>
-          </div>
-          <div className="flex items-center space-x-2">
-            <div className="grid flex-1 gap-2">
-              <Label htmlFor="tag">Description</Label>
-              <Textarea
-                onChange={(e) => setAbout(e.target.value)}
-                value={about}
-              />
+            <div className="flex items-center space-x-2">
+              <div className="grid flex-1 gap-2">
+                <Label htmlFor="tag">Description</Label>
+                <Textarea
+                  onChange={(e) => setAbout(e.target.value)}
+                  value={about}
+                />
+              </div>
             </div>
-          </div>
-          <AlertDialogFooter>
-            <div className="flex justify-between w-full">
-              <AlertDialogCancel>Discard</AlertDialogCancel>
-              {/* eslint-disable-next-line */}
-              <AlertDialogAction onClick={handleSaveInfo}>
-                Save
-              </AlertDialogAction>
-            </div>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+            <AlertDialogFooter>
+              <div className="flex justify-between w-full">
+                <AlertDialogCancel>Discard</AlertDialogCancel>
+                {/* eslint-disable-next-line */}
+                <AlertDialogAction onClick={handleSaveInfo}>
+                  Save
+                </AlertDialogAction>
+              </div>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      )}
     </div>
   );
 }

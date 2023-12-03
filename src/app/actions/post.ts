@@ -90,6 +90,7 @@ interface PickyBlogPost {
     about: string;
   };
 }
+
 export async function getBlogsByUser(query: string) {
   try {
     const blogPosts: PickyBlogPost[] = await prisma.post.findMany({
@@ -126,4 +127,76 @@ export async function getBlogsByUser(query: string) {
     console.error("Error fetching blog post:", error);
     throw error;
   }
+}
+
+export async function getBlogsBySlug(query: string) {
+  try {
+    const blogPosts: PickyBlogPost[] = await prisma.post.findMany({
+      where: {
+        user: {
+          slug: query,
+        },
+      },
+      select: {
+        title: true,
+        slug: true,
+        createdAt: true,
+        image: true,
+        user: {
+          select: {
+            firstName: true,
+            lastName: true,
+            brief: true,
+            id: true,
+            about: true,
+          },
+        },
+      },
+    });
+
+    if (!blogPosts) {
+      // Handle the case where no post is found with the specified slug
+      return null;
+    }
+
+    return blogPosts;
+  } catch (error) {
+    // Handle any other errors that may occur during the query
+    console.error("Error fetching blog post:", error);
+    throw error;
+  }
+}
+
+export async function getUserBySlug(query: string) {
+  const user = await prisma.user.findUnique({
+    where: {
+      slug: query,
+    },
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+      brief: true,
+      about: true,
+    },
+  });
+
+  return user;
+}
+
+export async function getUserById(query: string) {
+  const user = await prisma.user.findUnique({
+    where: {
+      clerkUserId: query,
+    },
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+      brief: true,
+      about: true,
+    },
+  });
+
+  return user;
 }

@@ -1,42 +1,35 @@
 import ProfilePageComponent from "@/components/layouts/ProfilePageComponent";
-import { currentUser } from "@clerk/nextjs";
 import { notFound } from "next/navigation";
+import type { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import React from "react";
-import { getBlogsByUser, getUserById } from "../actions/post";
+import { getBlogsBySlug, getUserBySlug } from "@/app/actions/post";
 import { formatDate } from "@/utils/date";
-import { Button } from "@/components/ui/Button";
-import Link from "next/link";
 
-async function ProfilePage() {
-  const clerkUser = await currentUser();
-  if (!clerkUser) {
-    notFound();
-  }
+async function ProfilePage({ params }: { params: Params }) {
+  const { slug } = params;
 
-  const myBlogs = await getBlogsByUser(clerkUser.id);
-  const user = await getUserById(clerkUser.id);
+  const myBlogs = await getBlogsBySlug(slug[0]);
+  const user = await getUserBySlug(slug[0]);
 
   if (!myBlogs || !user) {
     notFound();
   }
-
   return (
     <div className="lg:px-[10%] px-[5%] grid md:grid-cols-[.3fr_.7fr] grid-cols-1 w-full">
-      <ProfilePageComponent user={user} isCurrentUser={true} />
+      <ProfilePageComponent user={user} isCurrentUser={false} />
       <div className="w-full px-[5%] pt-8 flex flex-col md:border-l-2">
         {!myBlogs || myBlogs.length === 0 ? (
           <div className="my-20 flex flex-col gap-4 items-center">
             <h1 className="text-xl font-semibold">
-              You have not written any Blog
+              This User has Not written any Blogs
             </h1>
-            <Link href="/write">
-              <Button variant="outline">Write Blog</Button>
-            </Link>
           </div>
         ) : (
           <>
             {" "}
-            <h1 className="font-bold text-3xl mb-4">My Blogs</h1>
+            <h1 className="font-bold text-3xl mb-4">
+              {myBlogs[0].user.firstName} {myBlogs[0].user.lastName} Blog&apos;s
+            </h1>
             {myBlogs.map((blog, ind) => (
               <div
                 className="flex flex-col sm:grid grid-cols-[0.3fr_0.7fr] py-4 gap-4 cursor-pointer"
