@@ -2,7 +2,7 @@ import React from "react";
 import { categories } from "@/config/categories";
 import BlogCard from "@/components/ui/BlogCard";
 import Link from "next/link";
-import { getLatestBlogs } from "../actions/post";
+import { getLatestBlogs, getBlogsCount } from "../actions/post";
 import type { Post } from "@prisma/client";
 import { extractFirst15Words, formatDate } from "@/utils/date";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
@@ -10,6 +10,8 @@ import { me } from "@/config/layout";
 
 export default async function Home() {
   const latestBlogs: Post[] = await getLatestBlogs();
+
+  const blogsCount = await getBlogsCount(categories);
 
   return (
     <main className=" text-center lg:pt-30 pt-20 md:pt-30 ">
@@ -58,7 +60,9 @@ export default async function Home() {
               <Link key={ind} href={category.href}>
                 <div className="border w-full h-40 flex flex-col justify-center text-left hover:bg-secondary/90 cursor-pointer rounded-md px-[10%]">
                   <h1 className="font-bold">{category.name}</h1>
-                  <p className="text-muted-foreground">4 Blogs</p>
+                  <p className="text-muted-foreground">
+                    {blogsCount[ind] === 0 ? `No` : blogsCount[ind]} Blogs
+                  </p>
                 </div>
               </Link>
             );

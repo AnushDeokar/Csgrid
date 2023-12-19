@@ -1,3 +1,4 @@
+import type { HomeCategory } from "@/config/categories";
 import prisma from "@/libs/prismadb";
 import type { Post } from "@prisma/client";
 
@@ -41,6 +42,33 @@ export async function getBlogBySlug(slug: any): Promise<any> {
     }
 
     return blogPost;
+  } catch (error) {
+    // Handle any other errors that may occur during the query
+    console.error("Error fetching blog post:", error);
+    throw error;
+  }
+}
+
+export async function getBlogsCount(categories: HomeCategory[]) {
+  try {
+    const blogsCount = [];
+    for (let i = 0; i < categories.length; i++) {
+      const category = await prisma.category.findUnique({
+        where: {
+          slug: categories[i].slug,
+        },
+        include: {
+          posts: true,
+        },
+      });
+      if (category) {
+        blogsCount.push(category.posts.length);
+      } else {
+        blogsCount.push(0);
+      }
+    }
+
+    return blogsCount;
   } catch (error) {
     // Handle any other errors that may occur during the query
     console.error("Error fetching blog post:", error);
