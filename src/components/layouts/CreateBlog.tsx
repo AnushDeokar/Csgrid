@@ -154,6 +154,7 @@ function CreateBlog({ userId }: { userId: string }): React.ReactNode {
             className="w-fit"
             // eslint-disable-next-line
             onClick={handlePublish}
+            disabled={isPending}
           >
             {isPending && (
               <Icons.spinner

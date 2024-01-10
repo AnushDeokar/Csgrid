@@ -24,7 +24,7 @@ async function CategoryMainPage() {
             <BlogCard
               key={ind}
               title={blog.title}
-              brief="Discover the diverse styles of skate board and unleash you"
+              brief={`This blog will give you deep understanding on the topic ${blog.title}`}
               date={formatDate(blog.createdAt)}
               url={`/blog/${blog.slug}`}
               imageSrc={blog.image}

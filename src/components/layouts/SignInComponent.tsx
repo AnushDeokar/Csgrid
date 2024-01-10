@@ -23,6 +23,7 @@ export function SignInComponent(): React.ReactNode {
     password: "",
   });
   const { isLoaded, signIn, setActive } = useSignIn();
+  const [loading, setIsLoading] = useState<boolean>(false);
 
   if (!isLoaded) {
     return null;
@@ -30,6 +31,7 @@ export function SignInComponent(): React.ReactNode {
 
   const handleSubmit: any = async (e: any) => {
     e.preventDefault();
+    setIsLoading(true);
     await signIn
       .create({
         identifier: formData.email,
@@ -40,6 +42,7 @@ export function SignInComponent(): React.ReactNode {
           toast.success("Successfully signed in!");
           // eslint-disable-next-line
           setActive({ session: result.createdSessionId });
+          setIsLoading(false);
           router.push("/");
         } else {
           console.log(result);
@@ -49,6 +52,7 @@ export function SignInComponent(): React.ReactNode {
         toast.error("Invalid Credentials");
         console.error("error", err.errors[0].longMessage);
       });
+    setIsLoading(false);
   };
 
   return (
@@ -88,7 +92,7 @@ export function SignInComponent(): React.ReactNode {
           }}
         />
       </div>
-      <Button className="w-full" onClick={handleSubmit}>
+      <Button className="w-full" onClick={handleSubmit} disabled={loading}>
         Sign In
       </Button>
       <CardFooter>
